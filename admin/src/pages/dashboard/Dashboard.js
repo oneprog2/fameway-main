@@ -30,7 +30,7 @@ const Dashboard1 = () => {
   const { user, isLoading, loginWithPopup } = useAuth0();
   const { data, loading, error } = useQuery(STORES);
   console.log(data);
-  console.log(user);
+  console.log(error);
 
   useEffect(() => {
     if (!user && !isLoading) {

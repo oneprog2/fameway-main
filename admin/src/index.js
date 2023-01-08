@@ -60,6 +60,7 @@ ReactDOM.render(
     redirectUri={window.location.origin}
     cacheLocation="localstorage"
     audience={"fameway-admin"}
+    error={console.log}
   >
     <AuthorizedApolloProvider>
       <Provider store={configureStore()}>
