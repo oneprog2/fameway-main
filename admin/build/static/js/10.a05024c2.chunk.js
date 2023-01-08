@@ -1,2 +1,0 @@
-(this.webpackJsonpflexy=this.webpackJsonpflexy||[]).push([[10],{222:function(e,t,n){"use strict";n.r(t);n(0);var s=n(3),c=n(5);t.default=function(){return Object(c.jsx)(c.Fragment,{children:Object(c.jsx)(s.b,{})})}}}]);
-//# sourceMappingURL=10.a05024c2.chunk.js.map
