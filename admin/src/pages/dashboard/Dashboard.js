@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Grid,
   Button,
@@ -15,15 +15,32 @@ import ThemeSelect from "./ThemeSelect";
 
 import Breadcrumb from "../../layouts/full-layout/breadcrumb/Breadcrumb";
 import PageContainer from "../../components/container/PageContainer";
+import { gql, useQuery } from "@apollo/client";
+
+export const STORES = gql`
+  query {
+    store {
+      id
+      name
+    }
+  }
+`;
 
 const Dashboard1 = () => {
-  const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
-    useAuth0();
+  const { user, isLoading, loginWithPopup } = useAuth0();
+  const { data, loading, error } = useQuery(STORES);
+  console.log(data);
+  console.log(user);
+
+  useEffect(() => {
+    if (!user && !isLoading) {
+      loginWithPopup();
+    }
+  }, [user, loginWithPopup]);
 
   if (isLoading) {
     return <div>Loading ...</div>;
   }
-  if (!isAuthenticated) return null;
 
   return (
     <PageContainer title="Starter Page" description="this is Starter Page">
