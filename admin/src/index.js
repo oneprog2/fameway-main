@@ -17,7 +17,8 @@ import {
   createHttpLink,
 } from "@apollo/client";
 
-const hasuraUri = "http://localhost:8080/v1/graphql";
+const hasuraUri =
+  "https://c82e-2001-1c00-2403-4c00-b04a-a75c-233d-5d39.eu.ngrok.io/v1/graphql";
 
 const AuthorizedApolloProvider = ({ children }) => {
   const { getAccessTokenSilently, isLoading, isAuthenticated } = useAuth0();

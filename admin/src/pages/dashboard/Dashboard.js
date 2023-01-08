@@ -15,7 +15,7 @@ import ThemeSelect from "./ThemeSelect";
 
 import Breadcrumb from "../../layouts/full-layout/breadcrumb/Breadcrumb";
 import PageContainer from "../../components/container/PageContainer";
-import { gql, useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
 
 export const STORES = gql`
   query {
@@ -27,16 +27,13 @@ export const STORES = gql`
 `;
 
 const Dashboard1 = () => {
-  const { user, isLoading, loginWithPopup } = useAuth0();
-  const { data, loading, error } = useQuery(STORES);
-  console.log(data);
-  console.log(error);
+  const { user, isLoading, loginWithRedirect, logout } = useAuth0();
 
   useEffect(() => {
     if (!user && !isLoading) {
-      loginWithPopup();
+      loginWithRedirect();
     }
-  }, [user, loginWithPopup]);
+  }, []);
 
   if (isLoading) {
     return <div>Loading ...</div>;
@@ -70,6 +67,7 @@ const Dashboard1 = () => {
         {/* ------------------------- row 1 ------------------------- */}
         <Grid item xs={12} lg={12}>
           <Card>
+            <Button onClick={logout} />
             <CardContent>
               <Typography variant="h4">Starter Card</Typography>
               <Typography variant="body1">
