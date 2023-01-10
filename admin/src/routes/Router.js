@@ -12,10 +12,14 @@ const BlankLayout = Loadable(
 /* ***End Layouts**** */
 
 const Error = Loadable(lazy(() => import("../pages/authentication/Error")));
+/* ****Routes***** */
+const Login = Loadable(lazy(() => import("../pages/authentication/Login")));
+const Register = Loadable(
+  lazy(() => import("../pages/authentication/Register"))
+);
 
 /* ****Pages***** */
 const Dashboard = Loadable(lazy(() => import("../pages/dashboard/Dashboard")));
-/* ****Routes***** */
 
 const Router = [
   {
@@ -31,6 +35,8 @@ const Router = [
     path: "/auth",
     element: <BlankLayout />,
     children: [
+      { path: "login", element: <Login /> },
+      { path: "register", element: <Register /> },
       { path: "404", element: <Error /> },
       { path: "*", element: <Navigate to="/auth/404" /> },
     ],

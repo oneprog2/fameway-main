@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Fab,
   Drawer,
@@ -9,13 +9,17 @@ import {
   Box,
   Typography,
   Tooltip,
-} from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
-import FeatherIcon from 'feather-icons-react';
-import { setTheme, setDir, setDarkMode } from '../../../redux/customizer/Action';
-import CustomRadio from '../../../components/forms/custom-elements/CustomRadio';
+} from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import FeatherIcon from "feather-icons-react";
+import {
+  setTheme,
+  setDir,
+  setDarkMode,
+} from "../../../redux/customizer/Action";
+import CustomRadio from "../../../components/forms/custom-elements/CustomRadio";
 
-const SidebarWidth = '320px';
+const SidebarWidth = "320px";
 
 const Customizer = () => {
   const [showDrawer, setShowDrawer] = useState(false);
@@ -24,33 +28,33 @@ const Customizer = () => {
   const thColors = [
     {
       id: 1,
-      bgColor: '#1a9bfc',
-      disp: 'BLUE_THEME',
+      bgColor: "#1a9bfc",
+      disp: "BLUE_THEME",
     },
     {
       id: 2,
-      bgColor: '#00cec3',
-      disp: 'GREEN_THEME',
+      bgColor: "#00cec3",
+      disp: "GREEN_THEME",
     },
     {
       id: 3,
-      bgColor: '#7352ff',
-      disp: 'PURPLE_THEME',
+      bgColor: "#7352ff",
+      disp: "PURPLE_THEME",
     },
     {
       id: 4,
-      bgColor: '#ff5c8e',
-      disp: 'RED_THEME',
+      bgColor: "#ff5c8e",
+      disp: "RED_THEME",
     },
     {
       id: 5,
-      bgColor: '#1e4db7',
-      disp: 'INDIGO_THEME',
+      bgColor: "#1e4db7",
+      disp: "INDIGO_THEME",
     },
     {
       id: 6,
-      bgColor: '#fb9678',
-      disp: 'ORANGE_THEME',
+      bgColor: "#fb9678",
+      disp: "ORANGE_THEME",
     },
   ];
   return (
@@ -59,7 +63,7 @@ const Customizer = () => {
         <Fab
           color="primary"
           aria-label="settings"
-          sx={{ position: 'fixed', right: '15px', bottom: '15px' }}
+          sx={{ position: "fixed", right: "15px", bottom: "15px" }}
           onClick={() => setShowDrawer(true)}
         >
           <FeatherIcon icon="settings" />
@@ -91,8 +95,16 @@ const Customizer = () => {
               value={customizer.activeMode}
               onChange={(event) => dispatch(setDarkMode(event.target.value))}
             >
-              <FormControlLabel value="light" control={<CustomRadio />} label="Light" />
-              <FormControlLabel value="dark" control={<CustomRadio />} label="Dark" />
+              <FormControlLabel
+                value="light"
+                control={<CustomRadio />}
+                label="Light"
+              />
+              <FormControlLabel
+                value="dark"
+                control={<CustomRadio />}
+                label="Dark"
+              />
             </RadioGroup>
           </FormControl>
           <Box pt={3} />
@@ -107,8 +119,16 @@ const Customizer = () => {
               value={customizer.activeDir}
               onChange={(event) => dispatch(setDir(event.target.value))}
             >
-              <FormControlLabel value="ltr" control={<CustomRadio />} label="LTR" />
-              <FormControlLabel value="rtl" control={<CustomRadio />} label="RTL" />
+              <FormControlLabel
+                value="ltr"
+                control={<CustomRadio />}
+                label="LTR"
+              />
+              <FormControlLabel
+                value="rtl"
+                control={<CustomRadio />}
+                label="RTL"
+              />
             </RadioGroup>
           </FormControl>
           <Box pt={3} />
@@ -121,7 +141,7 @@ const Customizer = () => {
               <Fab
                 color="primary"
                 style={{ backgroundColor: thcolor.bgColor }}
-                sx={{ marginRight: '3px' }}
+                sx={{ marginRight: "3px" }}
                 size="small"
                 onClick={() => dispatch(setTheme(thcolor.disp))}
                 aria-label={thcolor.bgcolor}
@@ -129,7 +149,7 @@ const Customizer = () => {
                 {customizer.activeTheme === thcolor.disp ? (
                   <FeatherIcon icon="check" size="16" />
                 ) : (
-                  ''
+                  ""
                 )}
               </Fab>
             </Tooltip>
