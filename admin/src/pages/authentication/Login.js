@@ -16,6 +16,12 @@ import CustomTextField from "../../../src/components/forms/custom-elements/Custo
 
 import img1 from "../../assets/images/backgrounds/login-bg.svg";
 import { Unpublished, CheckCircle } from "@mui/icons-material";
+import { auth } from "../../services/auth0.service";
+import {
+  AUTH0_LOGIN_REDIRECT_URI,
+  AUTH0_REALM,
+  LOGIN_RESPONSE_TYPE,
+} from "../../config";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -114,70 +120,85 @@ const Login = () => {
                   fullWidth
                 />
 
-                {email === "illiasse@fameway.co" ? (
-                  <>
-                    <CustomTextField
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      id="password"
-                      type="password"
-                      variant="outlined"
-                      fullWidth
-                      placeholder="Mot de passe"
-                      sx={{
-                        mt: 2,
-                        mb: 3,
-                      }}
-                    />
+                <>
+                  <CustomTextField
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    id="password"
+                    type="password"
+                    variant="outlined"
+                    fullWidth
+                    placeholder="Mot de passe"
+                    sx={{
+                      mt: 2,
+                      mb: 3,
+                    }}
+                  />
+                  <Box
+                    sx={{
+                      display: {
+                        xs: "block",
+                        sm: "flex",
+                        lg: "flex",
+                      },
+                      alignItems: "center",
+                    }}
+                  >
+                    <FormGroup>
+                      <FormControlLabel
+                        control={<CustomCheckbox defaultChecked />}
+                        label="Se souvenir de moi"
+                        sx={{
+                          mb: 2,
+                        }}
+                      />
+                    </FormGroup>
                     <Box
                       sx={{
-                        display: {
-                          xs: "block",
-                          sm: "flex",
-                          lg: "flex",
-                        },
-                        alignItems: "center",
+                        ml: "auto",
                       }}
                     >
-                      <FormGroup>
-                        <FormControlLabel
-                          control={<CustomCheckbox defaultChecked />}
-                          label="Se souvenir de moi"
-                          sx={{
-                            mb: 2,
-                          }}
-                        />
-                      </FormGroup>
-                      <Box
+                      <Typography
+                        fontWeight="500"
                         sx={{
-                          ml: "auto",
+                          fontSize: "14px",
+                          display: "block",
+                          textDecoration: "none",
+                          mb: "16px",
+                          color: "secondary.main",
+                          cursor: "pointer",
                         }}
                       >
-                        {/* <NextLink href="/authentication/reset-password">
-                          <Typography
-                            fontWeight="500"
-                            sx={{
-                              fontSize: "14px",
-                              display: "block",
-                              textDecoration: "none",
-                              mb: "16px",
-                              color: "secondary.main",
-                              cursor: "pointer",
-                            }}
-                          >
-                            Mot de passe oublié ?
-                          </Typography>
-                        </NextLink> */}
-                      </Box>
+                        Mot de passe oublié ?
+                      </Typography>
                     </Box>
-                  </>
-                ) : null}
+                  </Box>
+                </>
 
                 <Button
                   color="primary"
                   variant="contained"
                   size="large"
                   fullWidth
+                  onClick={() => {
+                    auth.login(
+                      {
+                        email,
+                        password,
+                        realm: AUTH0_REALM,
+                        redirectUri: AUTH0_LOGIN_REDIRECT_URI,
+                        responseType: LOGIN_RESPONSE_TYPE,
+                      },
+                      (err, result) => {
+                        if (err) {
+                          console.log(err);
+                          return;
+                        }
+                        console.log("Login done");
+                        console.log(result);
+                      }
+                    );
+                  }}
                   disabled={email !== "illiasse@fameway.co" && password === ""}
                   sx={{
                     mt: 3,
@@ -332,112 +353,6 @@ const Login = () => {
                     </Box>
                   </>
                 ) : null}
-                {/* <Grid container spacing={2}>
-                <Grid item xs={12} sm={6} lg={6}>
-                  <Button
-                    variant="outlined"
-                    size="large"
-                    display="flex"
-                    alignitems="center"
-                    justifycontent="center"
-                    sx={{
-                      width: "100%",
-                      borderColor: (theme) =>
-                        `${
-                          theme.palette.mode === "dark" ? "#42464d" : "#dde3e8"
-                        }`,
-                      borderWidth: "2px",
-                      textAlign: "center",
-                      mt: 2,
-                      pt: "10px",
-                      pb: "10px",
-                      "&:hover": {
-                        borderColor: (theme) =>
-                          `${
-                            theme.palette.mode === "dark"
-                              ? "#42464d"
-                              : "#dde3e8"
-                          }`,
-                        borderWidth: "2px",
-                      },
-                    }}
-                  >
-                    <Box display="flex" alignItems="center">
-                      <FacebookIcon
-                        sx={{
-                          color: (theme) => theme.palette.secondary.main,
-                        }}
-                      />
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          ml: 1,
-                          color: (theme) =>
-                            `${
-                              theme.palette.mode === "dark"
-                                ? theme.palette.grey.A200
-                                : "#13152a"
-                            }`,
-                        }}
-                      >
-                        Facebook
-                      </Typography>
-                    </Box>
-                  </Button>
-                </Grid>
-                <Grid item xs={12} sm={6} lg={6}>
-                  <Button
-                    variant="outlined"
-                    size="large"
-                    display="flex"
-                    alignitems="center"
-                    justifycontent="center"
-                    sx={{
-                      width: "100%",
-                      borderColor: (theme) =>
-                        `${
-                          theme.palette.mode === "dark" ? "#42464d" : "#dde3e8"
-                        }`,
-                      borderWidth: "2px",
-                      textAlign: "center",
-                      mt: 2,
-                      pt: "10px",
-                      pb: "10px",
-                      "&:hover": {
-                        borderColor: (theme) =>
-                          `${
-                            theme.palette.mode === "dark"
-                              ? "#42464d"
-                              : "#dde3e8"
-                          }`,
-                        borderWidth: "2px",
-                      },
-                    }}
-                  >
-                    <Box display="flex" alignItems="center">
-                      <TwitterIcon
-                        sx={{
-                          color: (theme) => theme.palette.primary.main,
-                        }}
-                      />
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          ml: 1,
-                          color: (theme) =>
-                            `${
-                              theme.palette.mode === "dark"
-                                ? theme.palette.grey.A200
-                                : "#13152a"
-                            }`,
-                        }}
-                      >
-                        Twitter
-                      </Typography>
-                    </Box>
-                  </Button>
-                </Grid>
-              </Grid> */}
               </Box>
             </Box>
           </Grid>
@@ -448,9 +363,7 @@ const Login = () => {
             position: "absolute",
             top: "0",
           }}
-        >
-          {/* <LogoIcon /> */}
-        </Box>
+        ></Box>
       </Grid>
       <Grid
         item

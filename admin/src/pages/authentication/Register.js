@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Grid, Box, Typography, Button } from "@mui/material";
-
+import { auth } from "../../services/auth0.service";
 import GoogleIcon from "@mui/icons-material/Google";
 
 import CustomTextField from "../../../src/components/forms/custom-elements/CustomTextField";
+import { AUTH0_REALM } from "../../config";
 
 // import img1 from "../../assets/images/backgrounds/login-bg.svg";
 
@@ -11,7 +12,6 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [step2, setStep2] = useState(false);
 
   return (
     <Grid
@@ -92,8 +92,8 @@ const Register = () => {
                   }}
                 >
                   <CustomTextField
-                    onChange={(e) => setUsername(e.target.value)}
-                    value={username}
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
                     id="email"
                     placeholder="Ton mail"
                     variant="outlined"
@@ -106,9 +106,9 @@ const Register = () => {
                     marginTop: 10,
                     marginBottom: 15,
                   }}
-                  onChange={(e) => setEmail(e.target.value)}
-                  value={email}
-                  id="email"
+                  onChange={(e) => setUsername(e.target.value)}
+                  value={username}
+                  id="username"
                   placeholder="Nom de créateur / d'utilisateur"
                   variant="outlined"
                   fullWidth
@@ -137,7 +137,22 @@ const Register = () => {
                     size="large"
                     fullWidth
                     onClick={() => {
-                      setStep2(true);
+                      auth.signup(
+                        {
+                          email,
+                          password,
+                          username,
+                          connection: AUTH0_REALM,
+                        },
+                        (err, result) => {
+                          if (err) {
+                            console.log(err);
+                            return;
+                          }
+                          console.log("DONE");
+                          console.log(result);
+                        }
+                      );
                     }}
                     disabled={email === "" || username === ""}
                     sx={{

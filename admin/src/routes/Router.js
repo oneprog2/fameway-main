@@ -17,11 +17,18 @@ const Login = Loadable(lazy(() => import("../pages/authentication/Login")));
 const Register = Loadable(
   lazy(() => import("../pages/authentication/Register"))
 );
+const PostAuthenticate = Loadable(
+  lazy(() => import("../pages/authentication/PostAuthenticate"))
+);
 
 /* ****Pages***** */
 const Dashboard = Loadable(lazy(() => import("../pages/dashboard/Dashboard")));
 
 const Router = [
+  {
+    path: "authenticate",
+    element: <PostAuthenticate />,
+  },
   {
     path: "/",
     element: <FullLayout />,
