@@ -27,13 +27,7 @@ export const STORES = gql`
 `;
 
 const Dashboard1 = () => {
-  const { user, isLoading, loginWithRedirect, logout } = useAuth0();
-
-  useEffect(() => {
-    if (!user && !isLoading) {
-      loginWithRedirect();
-    }
-  }, []);
+  const { user, isLoading, logout } = useAuth0();
 
   if (isLoading) {
     return <div>Loading ...</div>;
