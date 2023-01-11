@@ -17,18 +17,14 @@ const Login = Loadable(lazy(() => import("../pages/authentication/Login")));
 const Register = Loadable(
   lazy(() => import("../pages/authentication/Register"))
 );
-const PostAuthenticate = Loadable(
-  lazy(() => import("../pages/authentication/PostAuthenticate"))
+const Callback = Loadable(
+  lazy(() => import("../pages/authentication/Callback"))
 );
 
 /* ****Pages***** */
 const Dashboard = Loadable(lazy(() => import("../pages/dashboard/Dashboard")));
 
 const Router = [
-  {
-    path: "authenticate",
-    element: <PostAuthenticate />,
-  },
   {
     path: "/",
     element: <FullLayout />,
@@ -42,6 +38,7 @@ const Router = [
     path: "/auth",
     element: <BlankLayout />,
     children: [
+      { path: "callback", element: <Callback /> },
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },
       { path: "404", element: <Error /> },

@@ -341,6 +341,7 @@ const Login = () => {
                         variant="contained"
                         size="large"
                         fullWidth
+                        href="/auth/register"
                         sx={{
                           fontWeight: "700",
                           borderRadius: "100px",
