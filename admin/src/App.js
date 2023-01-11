@@ -19,6 +19,8 @@ const App = () => {
   useEffect(() => {
     if (!isAuthenticated && !isLoading) {
       loginWithRedirect();
+    } else if (isAuthenticated && !isLoading) {
+      setNotReady(false);
     }
   }, [isAuthenticated, isLoading, loginWithRedirect]);
 
