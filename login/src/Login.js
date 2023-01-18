@@ -41,6 +41,8 @@ const Login = ({ navigation }) => {
 
   const handleSubmitLogin = async (e) => {
     console.log("oui");
+    const urlParams = new URLSearchParams(window.location.search);
+    const stateParam = urlParams.get("state") || "";
     setLoading(true);
     try {
       await auth.login(
@@ -48,8 +50,7 @@ const Login = ({ navigation }) => {
           email,
           password,
           realm: AUTH0_REALM,
-          redirectUri: AUTH0_LOGIN_REDIRECT_URI,
-          responseType: LOGIN_RESPONSE_TYPE,
+          state: stateParam,
         },
         (err, result) => {
           if (err) {
