@@ -11,7 +11,6 @@ const BlankLayout = Loadable(
 );
 /* ***End Layouts**** */
 
-const Login = Loadable(lazy(() => import("../pages/authentication/Login")));
 // const Register = Loadable(
 //   lazy(() => import("../pages/authentication/Register"))
 // );
@@ -36,7 +35,6 @@ const Router = [
     path: "/auth",
     element: <BlankLayout />,
     children: [
-      { path: "login", element: <Login /> },
       { path: "404", element: <Error /> },
       { path: "*", element: <Navigate to="/auth/404" /> },
     ],
