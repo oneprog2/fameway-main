@@ -40,6 +40,7 @@ const Login = ({ navigation }) => {
   // }, []);
 
   const handleSubmitLogin = async (e) => {
+    console.log("oui");
     setLoading(true);
     try {
       await auth.login(
