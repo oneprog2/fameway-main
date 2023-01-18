@@ -10,7 +10,7 @@ import {
 export const auth = new auth0.WebAuth({
   override: {
     __tenant: "dev-lzkir111o3ip75a0",
-    __token_issuer: "auth.fameway.co",
+    __token_issuer: "https://dev-lzkir111o3ip75a0.us.auth0.com",
   },
   scope: AUTH0_USER_SCOPE,
   domain: AUTH0_DOMAIN,
