@@ -56,7 +56,7 @@ const AuthorizedApolloProvider = ({ children }) => {
 
 ReactDOM.render(
   <Auth0Provider
-    domain="auth.fameway.co"
+    domain="dev-lzkir111o3ip75a0.us.auth0.com"
     clientId="fvFanDY5XxF2Op7kITivNKSox5mv6e6M"
     redirectUri={window.location.origin}
     cacheLocation="localstorage"
