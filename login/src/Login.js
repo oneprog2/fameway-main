@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grid,
   Box,
@@ -34,6 +34,10 @@ const Login = ({ navigation }) => {
   const [signup, setSignup] = useState(false);
   const [forgetPassword, setForgetPassword] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    auth.authorize();
+  }, []);
 
   const handleSubmitLogin = async (e) => {
     setLoading(true);
