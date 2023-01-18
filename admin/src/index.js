@@ -58,7 +58,7 @@ ReactDOM.render(
   <Auth0Provider
     domain="auth.fameway.co"
     clientId="fvFanDY5XxF2Op7kITivNKSox5mv6e6M"
-    redirectUri={window.location.origin}
+    redirectUri={"https://admin.fameway.co"}
     cacheLocation="localstorage"
     audience={"fameway-admin"}
     error={console.log}
