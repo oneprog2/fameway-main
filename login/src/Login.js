@@ -35,9 +35,9 @@ const Login = ({ navigation }) => {
   const [forgetPassword, setForgetPassword] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    auth.authorize();
-  }, []);
+  // useEffect(() => {
+  //   auth.authorize();
+  // }, []);
 
   const handleSubmitLogin = async (e) => {
     setLoading(true);
