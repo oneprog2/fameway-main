@@ -8,6 +8,7 @@ import {
   Button,
   InputAdornment,
   IconButton,
+  CircularProgress,
 } from "@mui/material";
 import FeatherIcon from "feather-icons-react";
 
@@ -16,11 +17,86 @@ import CustomCheckbox from "../../../src/components/forms/custom-elements/Custom
 import CustomTextField from "../../../src/components/forms/custom-elements/CustomTextField";
 
 import { VisibilityOff, Visibility } from "@mui/icons-material";
+import { auth } from "../../api/auth0.service";
+import {
+  AUTH0_LOGIN_REDIRECT_URI,
+  AUTH0_REALM,
+  LOGIN_RESPONSE_TYPE,
+} from "../../api/config";
 
-const Login = () => {
+const Login = ({ navigation }) => {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState();
+  const [loading, setLoading] = useState(false);
+  const [loadingGoogle, setLoadingGoogle] = useState(false);
+  const [signup, setSignup] = useState(false);
+  const [forgetPassword, setForgetPassword] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmitLogin = async (e) => {
+    setLoading(true);
+    try {
+      await auth.login(
+        {
+          email,
+          password,
+          realm: AUTH0_REALM,
+          redirectUri: "localhost:3000",
+          responseType: LOGIN_RESPONSE_TYPE,
+        },
+        (err, result) => {
+          if (err) {
+            console.log("err");
+            setError("Wrong username or password");
+            setLoading(false);
+            return;
+          }
+          console.log("Login done");
+          console.log(result);
+        }
+      );
+    } catch (error) {
+      setError("Wrong username or password");
+    }
+    setLoading(false);
+  };
+
+  // const handleSubmitLoginGoogle = async (e) => {
+  //
+  //   setLoadingGoogle(true);
+  //   try {
+  //     await loginWithGoogle();
+  //   } catch (error) {
+  //     setError("Failed to login with Google");
+  //   }
+  //   setLoadingGoogle(false);
+  // };
+
+  const handleSubmitSignup = async (e) => {
+    setLoading(true);
+    try {
+      await auth.signup(
+        {
+          connection: AUTH0_REALM,
+          email,
+          password,
+        },
+        async (err, result) => {
+          if (err) {
+            setError("Failed to create an account");
+            setLoading(false);
+            return err;
+          }
+          await handleSubmitLogin();
+        }
+      );
+    } catch (error) {
+      setError("Failed to create an account");
+    }
+    setLoading(false);
+  };
 
   return (
     <Grid
@@ -60,7 +136,11 @@ const Login = () => {
         }}
       >
         <Box
+          onClick={() => {
+            window.location.href = "/";
+          }}
           sx={{
+            cursor: "pointer",
             top: {
               xs: 0,
               sm: 30,
@@ -104,159 +184,531 @@ const Login = () => {
 
         <Grid container spacing={0} display="flex" justifyContent="center">
           <Grid item xs={12} lg={9} xl={6}>
-            <Box
-              sx={{
-                p: {
-                  xs: 4,
-                  sm: 10,
-                  md: 4,
-                  lg: 4,
-                  xl: 0,
-                },
-              }}
-            >
-              <Typography
-                fontWeight="700"
-                variant="h1"
-                style={{ marginBottom: 10 }}
-              >
-                (Re) Bienvenue sur Fameway !
-              </Typography>
-              <Box display="flex" alignItems="center">
-                <Typography
-                  color="textSecondary"
-                  variant="h4"
-                  fontWeight="500"
-                  sx={{
-                    mr: 1,
-                  }}
-                >
-                  Connecte toi pour gérer ta boutique sécurisée.
-                </Typography>
-              </Box>
+            {forgetPassword ? (
               <Box
                 sx={{
-                  mt: 4,
+                  p: {
+                    xs: 4,
+                    sm: 10,
+                    md: 4,
+                    lg: 4,
+                    xl: 0,
+                  },
                 }}
               >
-                {/* <CustomFormLabel htmlFor="email">Ton mail</CustomFormLabel> */}
-                <CustomTextField
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <FeatherIcon size={20} icon="user" />
-                      </InputAdornment>
-                    ),
-                  }}
-                  style={{
-                    backgroundColor: "#f0f0f0",
-                    borderRadius: 5,
-                  }}
-                  onChange={(e) => setEmail(e.target.value)}
-                  value={email}
-                  id="email"
-                  placeholder="Email ou nom de créateur"
-                  variant="outlined"
-                  fullWidth
-                />
+                <Box>
+                  <Box
+                    sx={{
+                      cursor: "pointer",
+                      width: 40,
+                    }}
+                    onClick={() => {
+                      setError("");
+                      setForgetPassword(false);
+                    }}
+                  >
+                    <FeatherIcon
+                      color="primary"
+                      size={40}
+                      icon={"arrow-left-circle"}
+                    />
+                  </Box>
+                </Box>
 
-                <>
+                <Typography
+                  fontWeight="700"
+                  variant="h1"
+                  style={{ marginBottom: 10, marginTop: 10 }}
+                >
+                  Un petit oubli ?
+                </Typography>
+
+                <Box display="flex" alignItems="center">
+                  <Typography
+                    color="textSecondary"
+                    variant="h4"
+                    fontWeight="500"
+                    sx={{
+                      mr: 1,
+                    }}
+                  >
+                    Ça arrive même aux meilleurs d'entre nous.
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    mt: 4,
+                  }}
+                >
+                  {/* <CustomFormLabel htmlFor="email">Ton mail</CustomFormLabel> */}
+
                   <CustomTextField
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <FeatherIcon size={20} icon={"mail"} />
+                        </InputAdornment>
+                      ),
+                    }}
                     style={{
                       backgroundColor: "#f0f0f0",
                       borderRadius: 5,
                     }}
-                    type={showPassword ? "text" : "password"}
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                    id="email"
+                    placeholder={"Email"}
+                    variant="outlined"
+                    fullWidth
+                  />
+
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    size="large"
+                    fullWidth
+                    disabled={loading || (!email && !password)}
+                    sx={{
+                      mt: 5,
+                      fontWeight: "700",
+                      borderRadius: "100px",
+                      pt: "10px",
+                      pb: "10px",
+                    }}
+                  >
+                    {loading ? (
+                      <CircularProgress size={25} />
+                    ) : (
+                      "Envoyer un mail de réinitialisation"
+                    )}
+                  </Button>
+                </Box>
+              </Box>
+            ) : (
+              <Box
+                sx={{
+                  p: {
+                    xs: 4,
+                    sm: 10,
+                    md: 4,
+                    lg: 4,
+                    xl: 0,
+                  },
+                }}
+              >
+                {signup ? (
+                  <Box>
+                    <Box
+                      sx={{
+                        cursor: "pointer",
+                        width: 40,
+                        marginBottom: 5,
+                      }}
+                      onClick={() => {
+                        setSignup(false);
+                      }}
+                    >
+                      <FeatherIcon
+                        color="primary"
+                        size={40}
+                        icon={"arrow-left-circle"}
+                      />
+                    </Box>
+                  </Box>
+                ) : null}
+
+                <Typography
+                  fontWeight="700"
+                  variant="h1"
+                  style={{ marginBottom: 10 }}
+                >
+                  {!signup
+                    ? "(Re) Bienvenue sur Fameway !"
+                    : "Crée ta boutique d’influence gratuite en quelques clics."}
+                </Typography>
+
+                <Box display="flex" alignItems="center">
+                  <Typography
+                    color="textSecondary"
+                    variant="h4"
+                    fontWeight="500"
+                    sx={{
+                      mr: 1,
+                    }}
+                  >
+                    {signup
+                      ? "Vends ton contenu, boost tes revenus."
+                      : "Connecte toi pour gérer ta boutique sécurisée."}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    mt: 4,
+                  }}
+                >
+                  {/* <CustomFormLabel htmlFor="email">Ton mail</CustomFormLabel> */}
+                  {signup ? (
+                    <CustomTextField
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <FeatherIcon size={20} icon="user" />
+                          </InputAdornment>
+                        ),
+                      }}
+                      style={{
+                        backgroundColor: "#f0f0f0",
+                        borderRadius: 5,
+                        marginBottom: 15,
+                      }}
+                      onChange={(e) => setUsername(e.target.value)}
+                      value={username}
+                      id="username"
+                      placeholder="Nom de créateur"
+                      variant="outlined"
+                      fullWidth
+                    />
+                  ) : null}
+
+                  <CustomTextField
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
-                          <FeatherIcon size={20} icon="lock" />
-                        </InputAdornment>
-                      ),
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onMouseUp={() => setShowPassword(false)}
-                            onMouseDown={() => setShowPassword(true)}
-                            edge="end"
-                          >
-                            {!showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
+                          <FeatherIcon
+                            size={20}
+                            icon={signup ? "mail" : "user"}
+                          />
                         </InputAdornment>
                       ),
                     }}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    id="password"
+                    style={{
+                      backgroundColor: "#f0f0f0",
+                      borderRadius: 5,
+                    }}
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                    id="email"
+                    placeholder={signup ? "Email" : "Email ou nom de créateur"}
                     variant="outlined"
                     fullWidth
-                    placeholder="Mot de passe"
-                    sx={{
-                      mt: 2,
-                      mb: 3,
-                    }}
                   />
-                  <Box
-                    sx={{
-                      display: {
-                        xs: "block",
-                        sm: "flex",
-                        lg: "flex",
-                      },
-                      alignItems: "center",
-                    }}
-                  >
-                    <FormGroup>
-                      <FormControlLabel
-                        control={<CustomCheckbox defaultChecked />}
-                        label="Se souvenir de moi"
+
+                  <>
+                    <CustomTextField
+                      style={{
+                        backgroundColor: "#f0f0f0",
+                        borderRadius: 5,
+                      }}
+                      type={showPassword ? "text" : "password"}
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <FeatherIcon size={20} icon="lock" />
+                          </InputAdornment>
+                        ),
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              disabled={loading}
+                              aria-label="toggle password visibility"
+                              onClick={() => setShowPassword(!showPassword)}
+                              edge="end"
+                            >
+                              {!showPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      id="password"
+                      variant="outlined"
+                      fullWidth
+                      placeholder="Mot de passe"
+                      sx={{
+                        mt: 2,
+                        mb: 3,
+                      }}
+                    />
+
+                    {error ? (
+                      <Box
                         sx={{
                           mb: 2,
+                          textAlign: "center",
+                          alignItems: "center",
+                          justifyContent: "center",
                         }}
-                      />
-                    </FormGroup>
-                    <Box
-                      sx={{
-                        ml: "auto",
-                      }}
-                    >
-                      <Typography
-                        fontWeight="500"
+                        display="flex"
+                        alignItems="center"
+                      >
+                        <Typography
+                          align="center"
+                          color="red"
+                          textAlign={"center"}
+                          variant="h6"
+                          fontWeight="500"
+                        >
+                          {error}
+                        </Typography>
+                      </Box>
+                    ) : null}
+
+                    {!signup ? (
+                      <Box
                         sx={{
-                          fontSize: "14px",
-                          display: "block",
-                          textDecoration: "none",
-                          mb: "16px",
-                          color: "primary.main",
-                          cursor: "pointer",
+                          display: {
+                            xs: "block",
+                            sm: "flex",
+                            lg: "flex",
+                          },
+                          alignItems: "center",
                         }}
                       >
-                        Mot de passe oublié ?
+                        <FormGroup>
+                          <FormControlLabel
+                            control={<CustomCheckbox defaultChecked />}
+                            label="Se souvenir de moi"
+                            sx={{
+                              mb: 2,
+                            }}
+                          />
+                        </FormGroup>
+                        <Box
+                          onClick={() => {
+                            setError("");
+                            setForgetPassword(true);
+                          }}
+                          sx={{
+                            ml: "auto",
+                          }}
+                        >
+                          <Typography
+                            fontWeight="500"
+                            sx={{
+                              fontSize: "14px",
+                              display: "block",
+                              textDecoration: "none",
+                              mb: "16px",
+                              color: "primary.main",
+                              cursor: "pointer",
+                            }}
+                          >
+                            Mot de passe oublié ?
+                          </Typography>
+                        </Box>
+                      </Box>
+                    ) : (
+                      <Box
+                        onClick={() => {
+                          setError("");
+                          setSignup(false);
+                        }}
+                      >
+                        <Typography
+                          fontWeight="500"
+                          sx={{
+                            textAlign: "right",
+                            fontSize: "14px",
+                            display: "block",
+                            textDecoration: "none",
+                            my: 1,
+                            color: "primary.main",
+                            cursor: "pointer",
+                          }}
+                        >
+                          Tu as déjà une boutique ?
+                        </Typography>
+                      </Box>
+                    )}
+                  </>
+
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    size="large"
+                    fullWidth
+                    disabled={loading || (!email && !password)}
+                    sx={{
+                      mt: 3,
+                      fontWeight: "700",
+                      borderRadius: "100px",
+                      pt: "10px",
+                      pb: "10px",
+                    }}
+                    onClick={signup ? handleSubmitSignup : handleSubmitLogin}
+                  >
+                    {loading ? (
+                      <CircularProgress size={25} />
+                    ) : signup ? (
+                      "Créer ma boutique"
+                    ) : (
+                      "Se connecter"
+                    )}
+                  </Button>
+
+                  <Box>
+                    {!signup ? (
+                      <Button
+                        variant="outlined"
+                        size="large"
+                        display="flex"
+                        alignitems="center"
+                        justifycontent="center"
+                        // onClick={handleSubmitLoginGoogle}
+                        sx={{
+                          borderRadius: "100px",
+                          width: "100%",
+                          borderColor: (theme) =>
+                            `${
+                              theme.palette.mode === "dark"
+                                ? "#42464d"
+                                : "#dde3e8"
+                            }`,
+                          borderWidth: "2px",
+                          textAlign: "center",
+                          mt: 2,
+                          pt: "10px",
+                          pb: "10px",
+                          "&:hover": {
+                            borderColor: (theme) =>
+                              `${
+                                theme.palette.mode === "dark"
+                                  ? "#42464d"
+                                  : "#dde3e8"
+                              }`,
+                            borderWidth: "2px",
+                          },
+                        }}
+                      >
+                        {loadingGoogle ? (
+                          <CircularProgress size={25} />
+                        ) : (
+                          <Box display="flex" alignItems="center">
+                            <img
+                              style={{ width: 25, height: 25 }}
+                              src={
+                                "https://res.cloudinary.com/dgzpshsab/image/upload/v1673514918/google-logo-icon-png-transparent-background-osteopathy-16_xuuafj.png"
+                              }
+                            ></img>
+                            <Typography
+                              variant="h6"
+                              sx={{
+                                ml: 1,
+                                color: (theme) =>
+                                  `${
+                                    theme.palette.mode === "dark"
+                                      ? theme.palette.grey.A200
+                                      : "#13152a"
+                                  }`,
+                              }}
+                            >
+                              Me connecter avec Gmail
+                            </Typography>
+                          </Box>
+                        )}
+                      </Button>
+                    ) : null}
+                  </Box>
+
+                  <Box
+                    sx={{
+                      position: "relative",
+                      textAlign: "center",
+                      mt: "30px",
+                      mb: "20px",
+                      "&::before": {
+                        content: '""',
+                        background: (theme) =>
+                          `${
+                            theme.palette.mode === "dark"
+                              ? "#42464d"
+                              : "#ecf0f2"
+                          }`,
+                        height: "1px",
+                        width: "100%",
+                        position: "absolute",
+                        left: "0",
+                        top: "11px",
+                      },
+                    }}
+                  >
+                    <Typography
+                      component="span"
+                      color="textSecondary"
+                      variant="h6"
+                      fontWeight="400"
+                      sx={{
+                        position: "relative",
+                        padding: "0 12px",
+                        background: (theme) =>
+                          `${
+                            theme.palette.mode === "dark"
+                              ? "#282c34"
+                              : "#ffffff"
+                          }`,
+                      }}
+                    >
+                      {signup ? "OU" : "PAS DE COMPTE ?"}
+                    </Typography>
+                  </Box>
+
+                  {!signup ? (
+                    <Box display="flex" alignItems="center">
+                      <Typography
+                        color="textPrimary"
+                        variant="h4"
+                        textAlign="center"
+                        align="center"
+                        position="center"
+                        fontWeight="500"
+                        sx={{
+                          flex: 1,
+                          mt: 2,
+                          mr: 1,
+                          mb: 2,
+                        }}
+                      >
+                        Tu as une communauté de +10k fans ?
                       </Typography>
                     </Box>
-                  </Box>
-                </>
+                  ) : null}
 
-                <Button
-                  color="primary"
-                  variant="contained"
-                  size="large"
-                  fullWidth
-                  disabled={email !== "illiasse@fameway.co" && password === ""}
-                  sx={{
-                    mt: 3,
-                    fontWeight: "700",
-                    borderRadius: "100px",
-                    pt: "10px",
-                    pb: "10px",
-                  }}
-                >
-                  Me connecter
-                </Button>
-
-                <Box>
-                  {email !== "illiasse@fameway.co" ? (
+                  {!signup ? (
+                    <Box
+                      style={{
+                        marginTop: 17,
+                      }}
+                    >
+                      <Button
+                        onClick={() => {
+                          setError("");
+                          setSignup(true);
+                        }}
+                        color="primary"
+                        variant="contained"
+                        size="large"
+                        disabled={loading}
+                        fullWidth
+                        sx={{
+                          fontWeight: "700",
+                          borderRadius: "100px",
+                          pt: "10px",
+                          pb: "10px",
+                        }}
+                      >
+                        {loading ? (
+                          <CircularProgress size={25} />
+                        ) : (
+                          "Créer ma boutique"
+                        )}
+                      </Button>
+                    </Box>
+                  ) : (
                     <Button
                       variant="outlined"
                       size="large"
@@ -288,124 +740,37 @@ const Login = () => {
                         },
                       }}
                     >
-                      <Box display="flex" alignItems="center">
-                        <img
-                          style={{ width: 25, height: 25 }}
-                          src={
-                            "https://res.cloudinary.com/dgzpshsab/image/upload/v1673514918/google-logo-icon-png-transparent-background-osteopathy-16_xuuafj.png"
-                          }
-                        ></img>
-                        {/* <GoogleIcon
-                          sx={{
-                            color: (theme) => theme.palette.error.main,
-                          }}
-                        /> */}
-                        <Typography
-                          variant="h6"
-                          sx={{
-                            ml: 1,
-                            color: (theme) =>
-                              `${
-                                theme.palette.mode === "dark"
-                                  ? theme.palette.grey.A200
-                                  : "#13152a"
-                              }`,
-                          }}
-                        >
-                          Me connecter avec Gmail
-                        </Typography>
-                      </Box>
+                      {loadingGoogle ? (
+                        <CircularProgress size={25} />
+                      ) : (
+                        <Box display="flex" alignItems="center">
+                          <img
+                            style={{ width: 25, height: 25 }}
+                            src={
+                              "https://res.cloudinary.com/dgzpshsab/image/upload/v1673514918/google-logo-icon-png-transparent-background-osteopathy-16_xuuafj.png"
+                            }
+                          ></img>
+                          <Typography
+                            variant="h6"
+                            sx={{
+                              ml: 1,
+                              color: (theme) =>
+                                `${
+                                  theme.palette.mode === "dark"
+                                    ? theme.palette.grey.A200
+                                    : "#13152a"
+                                }`,
+                            }}
+                          >
+                            Créer ma boutique avec Gmail
+                          </Typography>
+                        </Box>
+                      )}
                     </Button>
-                  ) : null}
+                  )}
                 </Box>
-
-                {email !== "illiasse@fameway.co" ? (
-                  <>
-                    <Box
-                      sx={{
-                        position: "relative",
-                        textAlign: "center",
-                        mt: "30px",
-                        mb: "20px",
-                        "&::before": {
-                          content: '""',
-                          background: (theme) =>
-                            `${
-                              theme.palette.mode === "dark"
-                                ? "#42464d"
-                                : "#ecf0f2"
-                            }`,
-                          height: "1px",
-                          width: "100%",
-                          position: "absolute",
-                          left: "0",
-                          top: "11px",
-                        },
-                      }}
-                    >
-                      <Typography
-                        component="span"
-                        color="textSecondary"
-                        variant="h6"
-                        fontWeight="400"
-                        sx={{
-                          position: "relative",
-                          padding: "0 12px",
-                          background: (theme) =>
-                            `${
-                              theme.palette.mode === "dark"
-                                ? "#282c34"
-                                : "#ffffff"
-                            }`,
-                        }}
-                      >
-                        PAS DE COMPTE ?
-                      </Typography>
-                    </Box>
-
-                    <Box display="flex" alignItems="center">
-                      <Typography
-                        color="textPrimary"
-                        variant="h4"
-                        textAlign="center"
-                        align="center"
-                        position="center"
-                        fontWeight="500"
-                        sx={{
-                          flex: 1,
-                          mt: 2,
-                          mr: 1,
-                          mb: 2,
-                        }}
-                      >
-                        Tu as une communauté de +10k fans ?
-                      </Typography>
-                    </Box>
-                    <Box
-                      style={{
-                        marginTop: 17,
-                      }}
-                    >
-                      <Button
-                        color="primary"
-                        variant="contained"
-                        size="large"
-                        fullWidth
-                        href="/auth/register"
-                        sx={{
-                          fontWeight: "700",
-                          borderRadius: "100px",
-                          pt: "10px",
-                          pb: "10px",
-                        }}
-                      >
-                        Créer ma boutique
-                      </Button>
-                    </Box>
-                  </>
-                ) : null}
               </Box>
-            </Box>
+            )}
           </Grid>
         </Grid>
       </Grid>

@@ -21,37 +21,37 @@ const hasuraUri =
   "https://c82e-2001-1c00-2403-4c00-b04a-a75c-233d-5d39.eu.ngrok.io/v1/graphql";
 
 const AuthorizedApolloProvider = ({ children }) => {
-  const { getAccessTokenSilently, isLoading, isAuthenticated } = useAuth0();
+  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  } else {
-    const httpLink = createHttpLink({
-      uri: hasuraUri,
-    });
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // } else {
+  const httpLink = createHttpLink({
+    uri: hasuraUri,
+  });
 
-    const authLink = setContext(async () => {
-      if (isAuthenticated) {
-        const token = await getAccessTokenSilently();
-        console.log(token);
-        return {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        };
-      } else {
-        return {};
-      }
-    });
+  const authLink = setContext(async () => {
+    if (isAuthenticated) {
+      const token = await getAccessTokenSilently();
+      console.log(token);
+      return {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+    } else {
+      return {};
+    }
+  });
 
-    const apolloClient = new ApolloClient({
-      link: authLink.concat(httpLink),
-      cache: new InMemoryCache(),
-      connectToDevTools: true,
-    });
+  const apolloClient = new ApolloClient({
+    link: authLink.concat(httpLink),
+    cache: new InMemoryCache(),
+    connectToDevTools: true,
+  });
 
-    return <ApolloProvider client={apolloClient}>{children}</ApolloProvider>;
-  }
+  return <ApolloProvider client={apolloClient}>{children}</ApolloProvider>;
+  // }
 };
 
 ReactDOM.render(
