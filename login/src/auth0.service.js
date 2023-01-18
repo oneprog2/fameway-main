@@ -8,9 +8,9 @@ import {
 } from "./config";
 
 export const auth = new auth0.WebAuth({
+  scope: AUTH0_USER_SCOPE,
   domain: AUTH0_DOMAIN,
   clientID: AUTH0_CLIENT_ID,
-  scope: AUTH0_USER_SCOPE,
-  responseType: LOGIN_RESPONSE_TYPE,
   redirectUri: AUTH0_LOGIN_REDIRECT_URI,
+  responseType: LOGIN_RESPONSE_TYPE,
 });
