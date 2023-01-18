@@ -17,12 +17,12 @@ import CustomCheckbox from "../../../src/components/forms/custom-elements/Custom
 import CustomTextField from "../../../src/components/forms/custom-elements/CustomTextField";
 
 import { VisibilityOff, Visibility } from "@mui/icons-material";
-import { auth } from "../../api/auth0.service";
+import { auth } from "../../api/old";
 import {
   AUTH0_LOGIN_REDIRECT_URI,
   AUTH0_REALM,
   LOGIN_RESPONSE_TYPE,
-} from "../../api/config";
+} from "../../api/old";
 
 const Login = ({ navigation }) => {
   const [username, setUsername] = useState("");
