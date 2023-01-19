@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import FeatherIcon from 'feather-icons-react';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import FeatherIcon from "feather-icons-react";
 import {
   AppBar,
   Badge,
@@ -13,15 +13,16 @@ import {
   Avatar,
   Button,
   Drawer,
-} from '@mui/material';
-import PropTypes from 'prop-types';
+} from "@mui/material";
+import PropTypes from "prop-types";
 // Dropdown Component
-import CartDropdown from './CartDropdown';
-import MessageDropdown from './MessageDropdown';
-import NotificationDropdown from './NotificationDropdown';
-import ProfileDropdown from './ProfileDropdown';
-import CustomTextField from '../../../components/forms/custom-elements/CustomTextField';
-import userimg from '../../../assets/images/users/user2.jpg';
+import CartDropdown from "./CartDropdown";
+import MessageDropdown from "./MessageDropdown";
+import NotificationDropdown from "./NotificationDropdown";
+import ProfileDropdown from "./ProfileDropdown";
+import CustomTextField from "../../../components/forms/custom-elements/CustomTextField";
+import userimg from "../../../assets/images/users/user2.jpg";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -69,6 +70,8 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar }) => {
     setShowDrawer2(false);
   };
 
+  const { user, isLoading, logout } = useAuth0();
+
   return (
     <AppBar sx={sx} elevation={0} className={customClass}>
       <Toolbar>
@@ -80,8 +83,8 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar }) => {
           size="large"
           sx={{
             display: {
-              lg: 'flex',
-              xs: 'none',
+              lg: "flex",
+              xs: "none",
             },
           }}
         >
@@ -95,8 +98,8 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar }) => {
           onClick={toggleMobileSidebar}
           sx={{
             display: {
-              lg: 'none',
-              xs: 'flex',
+              lg: "none",
+              xs: "flex",
             },
           }}
         >
@@ -120,8 +123,8 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar }) => {
           open={showDrawer2}
           onClose={() => setShowDrawer2(false)}
           sx={{
-            '& .MuiDrawer-paper': {
-              padding: '15px 30px',
+            "& .MuiDrawer-paper": {
+              padding: "15px 30px",
             },
           }}
         >
@@ -131,11 +134,11 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar }) => {
               size="small"
               placeholder="Search here"
               fullWidth
-              inputProps={{ 'aria-label': 'Search here' }}
+              inputProps={{ "aria-label": "Search here" }}
             />
             <Box
               sx={{
-                ml: 'auto',
+                ml: "auto",
               }}
             >
               <IconButton
@@ -153,23 +156,18 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar }) => {
         {/* ------------ End Menu icon ------------- */}
 
         <Box flexGrow={1} />
-        {/* ------------------------------------------- */}
-        {/* Ecommerce Dropdown */}
-        {/* ------------------------------------------- */}
-        <IconButton size="large" color="inherit" onClick={() => setShowDrawer(true)}>
-          <FeatherIcon icon="shopping-cart" width="20" height="20" />
-        </IconButton>
+
         <Drawer
           anchor="right"
           open={showDrawer}
           onClose={() => setShowDrawer(false)}
           sx={{
-            '& .MuiDrawer-paper': {
+            "& .MuiDrawer-paper": {
               width: {
-                xs: '100%',
-                sm: '395px',
+                xs: "100%",
+                sm: "395px",
               },
-              padding: '30px',
+              padding: "30px",
             },
           }}
         >
@@ -179,7 +177,7 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar }) => {
             </Typography>
             <Box
               sx={{
-                ml: 'auto',
+                ml: "auto",
               }}
             >
               <IconButton
@@ -203,34 +201,23 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar }) => {
         {/* ------------------------------------------- */}
         {/* Messages Dropdown */}
         {/* ------------------------------------------- */}
-        <IconButton
-          size="large"
-          aria-label="show 11 new notifications"
-          color="inherit"
-          aria-controls="msgs-menu"
-          aria-haspopup="true"
-          onClick={handleClick2}
-        >
-          <Badge variant="dot" color="primary">
-            <FeatherIcon icon="message-square" width="20" height="20" />
-          </Badge>
-        </IconButton>
+
         <Menu
           id="msgs-menu"
           anchorEl={anchorEl2}
           keepMounted
           open={Boolean(anchorEl2)}
           onClose={handleClose2}
-          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+          anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+          transformOrigin={{ horizontal: "right", vertical: "top" }}
           sx={{
-            '& .MuiMenu-paper': {
-              width: '385px',
+            "& .MuiMenu-paper": {
+              width: "385px",
               right: 0,
-              top: '70px !important',
+              top: "70px !important",
             },
-            '& .MuiList-padding': {
-              p: '30px',
+            "& .MuiList-padding": {
+              p: "30px",
             },
           }}
         >
@@ -252,11 +239,11 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar }) => {
                   size="small"
                   label="5 new"
                   sx={{
-                    borderRadius: '6px',
-                    pl: '5px',
-                    pr: '5px',
+                    borderRadius: "6px",
+                    pl: "5px",
+                    pr: "5px",
                     backgroundColor: (theme) => theme.palette.secondary.main,
-                    color: '#fff',
+                    color: "#fff",
                   }}
                 />
               </Box>
@@ -267,8 +254,8 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar }) => {
           <Button
             sx={{
               mt: 2,
-              display: 'block',
-              width: '100%',
+              display: "block",
+              width: "100%",
             }}
             variant="contained"
             color="primary"
@@ -277,121 +264,17 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar }) => {
             <Link
               to="/email"
               style={{
-                color: '#fff',
-                width: '100%',
-                display: 'block',
-                textDecoration: 'none',
+                color: "#fff",
+                width: "100%",
+                display: "block",
+                textDecoration: "none",
               }}
             >
               See all messages
             </Link>
           </Button>
         </Menu>
-        {/* ------------------------------------------- */}
-        {/* End Messages Dropdown */}
-        {/* ------------------------------------------- */}
-        {/* ------------------------------------------- */}
-        {/* Notifications Dropdown */}
-        {/* ------------------------------------------- */}
-        <IconButton
-          size="large"
-          aria-label="menu"
-          color="inherit"
-          aria-controls="notification-menu"
-          aria-haspopup="true"
-          onClick={handleClick}
-        >
-          <Badge variant="dot" color="secondary">
-            <FeatherIcon icon="bell" width="20" height="20" />
-          </Badge>
-        </IconButton>
-        <Menu
-          id="notification-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-          sx={{
-            '& .MuiMenu-paper': {
-              width: '385px',
-              right: 0,
-              top: '70px !important',
-            },
-            '& .MuiList-padding': {
-              p: '30px',
-            },
-          }}
-        >
-          <Box
-            sx={{
-              mb: 1,
-            }}
-          >
-            <Box display="flex" alignItems="center">
-              <Typography variant="h4" fontWeight="500">
-                Notifications
-              </Typography>
-              <Box
-                sx={{
-                  ml: 2,
-                }}
-              >
-                <Chip
-                  size="small"
-                  label="5 new"
-                  sx={{
-                    borderRadius: '6px',
-                    pl: '5px',
-                    pr: '5px',
-                    backgroundColor: (theme) => theme.palette.warning.main,
-                    color: '#fff',
-                  }}
-                />
-              </Box>
-            </Box>
-          </Box>
-          <NotificationDropdown />
-          <Button
-            sx={{
-              mt: 2,
-              display: 'block',
-              width: '100%',
-            }}
-            variant="contained"
-            color="primary"
-            onClick={handleClose}
-          >
-            <Link
-              to="/email"
-              style={{
-                color: '#fff',
-                width: '100%',
-                display: 'block',
-                textDecoration: 'none',
-              }}
-            >
-              See all notifications
-            </Link>
-          </Button>
-        </Menu>
-        {/* ------------------------------------------- */}
-        {/* End Notifications Dropdown */}
-        {/* ------------------------------------------- */}
 
-        <Box
-          sx={{
-            width: '1px',
-            backgroundColor: 'rgba(0,0,0,0.1)',
-            height: '25px',
-            ml: 1,
-            mr: 1,
-          }}
-        />
-        {/* ------------------------------------------- */}
-        {/* Profile Dropdown */}
-        {/* ------------------------------------------- */}
         <Button
           aria-label="menu"
           color="inherit"
@@ -400,24 +283,29 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar }) => {
           onClick={handleClick4}
         >
           <Box display="flex" alignItems="center">
-            <Avatar
-              src={userimg}
-              alt={userimg}
+            <Box
               sx={{
-                width: '30px',
-                height: '30px',
+                borderRadius: "100%",
+                width: "30px",
+                height: "30px",
+                backgroundColor: "#000000",
               }}
             />
             <Box
               sx={{
                 display: {
-                  xs: 'none',
-                  sm: 'flex',
+                  xs: "none",
+                  sm: "flex",
                 },
-                alignItems: 'center',
+                alignItems: "center",
               }}
             >
-              <Typography color="textSecondary" variant="h5" fontWeight="400" sx={{ ml: 1 }}>
+              <Typography
+                color="textSecondary"
+                variant="h5"
+                fontWeight="400"
+                sx={{ ml: 1 }}
+              >
                 Hi,
               </Typography>
               <Typography
@@ -427,7 +315,7 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar }) => {
                   ml: 1,
                 }}
               >
-                Julia
+                {user?.name}
               </Typography>
               <FeatherIcon icon="chevron-down" width="20" height="20" />
             </Box>
@@ -440,47 +328,30 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar }) => {
           open={Boolean(anchorEl4)}
           onClose={handleClose4}
           sx={{
-            '& .MuiMenu-paper': {
-              width: '385px',
+            "& .MuiMenu-paper": {
+              width: "385px",
               right: 0,
-              top: '70px !important',
+              top: "70px !important",
             },
-            '& .MuiList-padding': {
-              p: '30px',
+            "& .MuiList-padding": {
+              p: "30px",
             },
           }}
         >
-          <Box
-            sx={{
-              mb: 1,
-            }}
-          >
-            <Box display="flex" alignItems="center">
-              <Typography variant="h4" fontWeight="500">
-                User Profile
-              </Typography>
-            </Box>
-          </Box>
-
           <ProfileDropdown />
-          <Link
-            style={{
-              textDecoration: 'none',
+
+          <Button
+            onClick={logout}
+            sx={{
+              mt: 2,
+              display: "block",
+              width: "100%",
             }}
-            to="/auth/login"
+            variant="contained"
+            color="primary"
           >
-            <Button
-              sx={{
-                mt: 2,
-                display: 'block',
-                width: '100%',
-              }}
-              variant="contained"
-              color="primary"
-            >
-              Logout
-            </Button>
-          </Link>
+            Logout
+          </Button>
         </Menu>
       </Toolbar>
     </AppBar>

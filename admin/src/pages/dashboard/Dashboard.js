@@ -36,7 +36,7 @@ const Dashboard1 = () => {
   return (
     <PageContainer title="Dashboard" description="Main informations">
       <Breadcrumb
-        title={`Hello ${user?.username}`}
+        title={`Hello ${user?.name}`}
         subtitle={`C'est le come back !`}
       >
         <ThemeSelect />
