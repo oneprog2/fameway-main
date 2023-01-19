@@ -34,8 +34,7 @@ const Dashboard1 = () => {
   }
 
   return (
-    <PageContainer title="Starter Page" description="this is Starter Page">
-      {/* breadcrumb */}
+    <PageContainer title="Dashboard" description="Main informations">
       <Breadcrumb
         title={`Hello ${user?.name}`}
         subtitle={`C'est le come back !`}
@@ -56,23 +55,6 @@ const Dashboard1 = () => {
           </Box>
         </Button>
       </Breadcrumb>
-      {/* end breadcrumb */}
-      <Grid container spacing={0}>
-        {/* ------------------------- row 1 ------------------------- */}
-        <Grid item xs={12} lg={12}>
-          <Card>
-            <Button onClick={logout} />
-            <CardContent>
-              <Typography variant="h4">Starter Card</Typography>
-              <Typography variant="body1">
-                This impressive paella is a perfect party dish and a fun meal to
-                cook together with your guests. Add 1 cup of frozen peas along
-                with the mussels, if you like.
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
     </PageContainer>
   );
 };
