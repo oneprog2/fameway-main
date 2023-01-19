@@ -274,6 +274,7 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar }) => {
             </Link>
           </Button>
         </Menu>
+        {console.log(user)}
 
         <Button
           aria-label="menu"
@@ -306,7 +307,7 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar }) => {
                 fontWeight="400"
                 sx={{ ml: 1 }}
               >
-                Hi,
+                Hello,
               </Typography>
               <Typography
                 variant="h5"

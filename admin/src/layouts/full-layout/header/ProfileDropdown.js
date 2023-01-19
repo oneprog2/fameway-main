@@ -19,12 +19,12 @@ const ProfileDropdown = () => {
     <Box>
       <Box sx={{}}>
         <Box display="flex" alignItems="center">
-          <Avatar
-            src={userimg}
-            alt={userimg}
+          <Box
             sx={{
               width: "90px",
               height: "90px",
+              borderRadius: "100%",
+              backgroundColor: "#000000",
             }}
           />
           <Box
