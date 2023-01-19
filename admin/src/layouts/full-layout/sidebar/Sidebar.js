@@ -1,7 +1,7 @@
-import React from 'react';
-import { useLocation } from 'react-router';
-import { NavLink } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React from "react";
+import { useLocation } from "react-router";
+import { NavLink } from "react-router-dom";
+import PropTypes from "prop-types";
 import {
   Box,
   Drawer,
@@ -12,20 +12,20 @@ import {
   Collapse,
   ListItemIcon,
   ListItemText,
-} from '@mui/material';
-import FeatherIcon from 'feather-icons-react';
-import { SidebarWidth } from '../../../assets/global/Theme-variable';
-import LogoIcon from '../logo/LogoIcon';
-import Menuitems from './Menuitems';
-import Buynow from './Buynow';
-import Scrollbar from '../../../components/custom-scroll/Scrollbar';
+} from "@mui/material";
+import FeatherIcon from "feather-icons-react";
+import { SidebarWidth } from "../../../assets/global/Theme-variable";
+import LogoIcon from "../logo/LogoIcon";
+import Menuitems from "./Menuitems";
+import Buynow from "./Buynow";
+import Scrollbar from "../../../components/custom-scroll/Scrollbar";
 
 const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
   const [open, setOpen] = React.useState(true);
   const { pathname } = useLocation();
   const pathDirect = pathname;
-  const pathWithoutLastPart = pathname.slice(0, pathname.lastIndexOf('/'));
-  const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
+  const pathWithoutLastPart = pathname.slice(0, pathname.lastIndexOf("/"));
+  const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
 
   const handleClick = (index) => {
     if (open === index) {
@@ -36,7 +36,7 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
   };
 
   const SidebarContent = (
-    <Scrollbar style={{ height: 'calc(100vh - 5px)' }}>
+    <Scrollbar style={{ height: "calc(100vh - 5px)" }}>
       <Box sx={{ p: 2 }}>
         <LogoIcon />
         <Box>
@@ -49,7 +49,7 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
                     <Typography
                       variant="subtitle2"
                       fontWeight="500"
-                      sx={{ my: 2, mt: 4, opacity: '0.4' }}
+                      sx={{ my: 2, mt: 4, opacity: "0.4" }}
                     >
                       {item.subheader}
                     </Typography>
@@ -68,15 +68,16 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
                       sx={{
                         mb: 1,
                         ...(pathWithoutLastPart === item.href && {
-                          color: 'white',
-                          backgroundColor: (theme) => `${theme.palette.primary.main}!important`,
+                          color: "white",
+                          backgroundColor: (theme) =>
+                            `${theme.palette.primary.main}!important`,
                         }),
                       }}
                     >
                       <ListItemIcon
                         sx={{
                           ...(pathWithoutLastPart === item.href && {
-                            color: 'white',
+                            color: "white",
                           }),
                         }}
                       >
@@ -103,20 +104,24 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
                               sx={{
                                 mb: 1,
                                 ...(pathDirect === child.href && {
-                                  color: 'primary.main',
-                                  backgroundColor: 'transparent!important',
+                                  color: "primary.main",
+                                  backgroundColor: "transparent!important",
                                 }),
                               }}
                             >
                               <ListItemIcon
                                 sx={{
-                                  svg: { width: '14px', marginLeft: '3px' },
+                                  svg: { width: "14px", marginLeft: "3px" },
                                   ...(pathDirect === child.href && {
-                                    color: 'primary.main',
+                                    color: "primary.main",
                                   }),
                                 }}
                               >
-                                <FeatherIcon icon={child.icon} width="20" height="20" />
+                                <FeatherIcon
+                                  icon={child.icon}
+                                  width="20"
+                                  height="20"
+                                />
                               </ListItemIcon>
                               <ListItemText>{child.title}</ListItemText>
                             </ListItem>
@@ -139,19 +144,22 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
                       sx={{
                         mb: 1,
                         ...(pathDirect === item.href && {
-                          color: 'white',
-                          backgroundColor: (theme) => `${theme.palette.primary.main}!important`,
+                          color: "white",
+                          backgroundColor: (theme) =>
+                            `${theme.palette.primary.main}!important`,
                         }),
                       }}
                     >
                       <ListItemIcon
                         sx={{
-                          ...(pathDirect === item.href && { color: 'white' }),
+                          ...(pathDirect === item.href && { color: "white" }),
                         }}
                       >
                         <FeatherIcon icon={item.icon} width="20" height="20" />
                       </ListItemIcon>
-                      <ListItemText onClick={onSidebarClose}>{item.title}</ListItemText>
+                      <ListItemText onClick={onSidebarClose}>
+                        {item.title}
+                      </ListItemText>
                     </ListItem>
                   </List>
                 );
@@ -159,7 +167,6 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
             })}
           </List>
         </Box>
-        <Buynow />
       </Box>
     </Scrollbar>
   );
@@ -172,8 +179,8 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
         PaperProps={{
           sx: {
             width: SidebarWidth,
-            border: '0 !important',
-            boxShadow: '0px 7px 30px 0px rgb(113 122 131 / 11%)',
+            border: "0 !important",
+            boxShadow: "0px 7px 30px 0px rgb(113 122 131 / 11%)",
           },
         }}
       >
@@ -189,7 +196,7 @@ const Sidebar = ({ isMobileSidebarOpen, onSidebarClose, isSidebarOpen }) => {
       PaperProps={{
         sx: {
           width: SidebarWidth,
-          border: '0 !important',
+          border: "0 !important",
         },
       }}
       variant="temporary"

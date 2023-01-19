@@ -1,8 +1,15 @@
-import React from 'react';
-import { Box, MenuItem, Typography, Avatar, Button, Divider } from '@mui/material';
-import FeatherIcon from 'feather-icons-react';
+import React from "react";
+import {
+  Box,
+  MenuItem,
+  Typography,
+  Avatar,
+  Button,
+  Divider,
+} from "@mui/material";
+import FeatherIcon from "feather-icons-react";
 
-import userimg from '../../../assets/images/users/user2.jpg';
+import userimg from "../../../assets/images/users/user2.jpg";
 
 const ProfileDropdown = () => (
   <Box>
@@ -17,8 +24,8 @@ const ProfileDropdown = () => (
           src={userimg}
           alt={userimg}
           sx={{
-            width: '90px',
-            height: '90px',
+            width: "90px",
+            height: "90px",
           }}
         />
         <Box
@@ -29,7 +36,7 @@ const ProfileDropdown = () => (
           <Typography
             variant="h4"
             sx={{
-              lineHeight: '1.235',
+              lineHeight: "1.235",
             }}
           >
             Julia Roberts
@@ -50,7 +57,7 @@ const ProfileDropdown = () => (
               <FeatherIcon icon="mail" width="18" />
             </Typography>
             <Typography color="textSecondary" variant="h6">
-              info@flexy.com
+              info@fameway.co
             </Typography>
           </Box>
         </Box>
@@ -75,11 +82,11 @@ const ProfileDropdown = () => (
             sx={{
               backgroundColor: (theme) => theme.palette.primary.light,
               color: (theme) => theme.palette.primary.main,
-              boxShadow: 'none',
-              minWidth: '50px',
-              width: '45px',
-              height: '40px',
-              borderRadius: '10px',
+              boxShadow: "none",
+              minWidth: "50px",
+              width: "45px",
+              height: "40px",
+              borderRadius: "10px",
             }}
           >
             <FeatherIcon icon="dollar-sign" width="18" height="18" />
@@ -92,7 +99,7 @@ const ProfileDropdown = () => (
             <Typography
               variant="h5"
               sx={{
-                lineHeight: '1.235',
+                lineHeight: "1.235",
               }}
             >
               My Profile
@@ -120,11 +127,11 @@ const ProfileDropdown = () => (
             sx={{
               backgroundColor: (theme) => theme.palette.success.light,
               color: (theme) => theme.palette.success.main,
-              boxShadow: 'none',
-              minWidth: '50px',
-              width: '45px',
-              height: '40px',
-              borderRadius: '10px',
+              boxShadow: "none",
+              minWidth: "50px",
+              width: "45px",
+              height: "40px",
+              borderRadius: "10px",
             }}
           >
             <FeatherIcon icon="shield" width="18" height="18" />
@@ -137,7 +144,7 @@ const ProfileDropdown = () => (
             <Typography
               variant="h5"
               sx={{
-                lineHeight: '1.235',
+                lineHeight: "1.235",
               }}
             >
               My Inbox
@@ -165,11 +172,11 @@ const ProfileDropdown = () => (
             sx={{
               backgroundColor: (theme) => theme.palette.error.light,
               color: (theme) => theme.palette.error.main,
-              boxShadow: 'none',
-              minWidth: '50px',
-              width: '45px',
-              height: '40px',
-              borderRadius: '10px',
+              boxShadow: "none",
+              minWidth: "50px",
+              width: "45px",
+              height: "40px",
+              borderRadius: "10px",
             }}
           >
             <FeatherIcon icon="credit-card" width="18" height="18" />
@@ -182,7 +189,7 @@ const ProfileDropdown = () => (
             <Typography
               variant="h5"
               sx={{
-                lineHeight: '1.235',
+                lineHeight: "1.235",
               }}
             >
               My Tasks
