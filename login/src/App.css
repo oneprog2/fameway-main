@@ -1,10 +1,19 @@
 .App {
   text-align: center;
+
+}
+
+.MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"] {
+  background: red !important
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+.input:-internal-autofill-selected {
+background-color: red !important
 }
 
 @media (prefers-reduced-motion: no-preference) {

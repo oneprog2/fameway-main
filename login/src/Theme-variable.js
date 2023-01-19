@@ -4,6 +4,8 @@ import typography from "./Typography";
 import components from "./Override";
 import shadows from "./Shadows";
 
+export const BLUE_THEME = 'BLUE_THEME';
+
 const SidebarWidth = 265;
 const TopbarHeight = 70;
 
@@ -86,41 +88,46 @@ const baseTheme = {
   shadows,
 };
 
-// const themesOptions = [
-//   {
-//     name: BLUE_THEME,
-//     palette: {
-//       primary: {
-//         main: "#222222",
-//         light: "#222222",
-//         dark: "#444444",
-//       },
-//       secondary: {
-//         main: "#e6e6e6",
-//         light: "#e6e6e6",
-//         dark: "#e6e6e6",
-//       },
-//     },
-//   },
-// ];
+const themesOptions = [
+  {
+    name: BLUE_THEME,
+    palette: {
+      primary: {
+        main: "#222222",
+        light: "#222222",
+        dark: "#444444",
+      },
+      secondary: {
+        main: "#e6e6e6",
+        light: "#e6e6e6",
+        dark: "#e6e6e6",
+      },
+    },
+  },
+];
 
 export const BuildTheme = (config = {}) => {
-  let themeOptions = "BLUE_THEME";
+  let themeOptions = themesOptions.find((theme) => theme.name === config.theme);
 
   const baseMode = {
     palette: {
-      mode: "dark",
+      mode: "light",
       background: {
-        default: "dark" ? "#20232a" : "#fafbfb",
-        dark: "dark" ? "#1c2025" : "#ffffff",
-        paper: "dark" ? "#282C34" : "#ffffff",
+        default: "#fafbfb",
+        dark:  "#ffffff",
+        paper:"#ffffff",
       },
       text: {
-        primary: "dark" ? "#e6e5e8" : "rgba(0, 0, 0, 0.87)",
-        secondary: "dark" ? "#adb0bb" : "#777e89",
+        primary:
+           "rgba(0, 0, 0, 0.87)",
+        secondary: "#777e89",
       },
     },
   };
+  if (!themeOptions) {
+    console.warn(new Error(`The theme ${config.theme} is not valid`));
+    [themeOptions] = themesOptions;
+  }
 
   const theme = createTheme(
     _.merge({}, baseTheme, baseMode, themeOptions, {

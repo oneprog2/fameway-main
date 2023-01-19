@@ -2,7 +2,8 @@ import React from "react";
 import { styled } from "@mui/material/styles";
 import { TextField } from "@mui/material";
 
-const CustomTextField = styled((props) => <TextField {...props} />)(
+const CustomTextField = styled((props) => <TextField {...props}
+/>)(
   ({ theme }) => ({
     "& .MuiOutlinedInput-input::-webkit-input-placeholder": {
       color: "#767e89",
@@ -17,6 +18,10 @@ const CustomTextField = styled((props) => <TextField {...props} />)(
       backgroundColor: `${
         theme.palette.mode === "dark" ? "rgba(0, 0, 0, 0.12) " : "#f8f9fb "
       }`,
+    },
+    
+    "& .MuiAutocomplete-input": {
+      backgroundColor:'red !important'
     },
     "& .MuiOutlinedInput-input.Mui-disabled::-webkit-input-placeholder": {
       color: "#767e89",

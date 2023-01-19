@@ -35,15 +35,21 @@ const Login = ({ navigation }) => {
   const [forgetPassword, setForgetPassword] = useState(false);
   const [error, setError] = useState("");
 
-  // useEffect(() => {
-  //   auth.authorize();
-  // }, []);
+  const cantLogin = !email || !password;
+  const cantSignup = !email || !password || !username;
+
+  const manageError = (err) => {
+    if (!signup)
+    setError("La connexion a échoué : email ou mot de passe incorrect.")
+    else
+    setError(err.code)
+  }
 
   const handleSubmitLogin = async (e) => {
-    console.log("oui");
+    setLoading(true);
     const urlParams = new URLSearchParams(window.location.search);
     const stateParam = urlParams.get("state") || "";
-    setLoading(true);
+
     try {
       await auth.login(
         {
@@ -54,31 +60,36 @@ const Login = ({ navigation }) => {
         },
         (err, result) => {
           if (err) {
-            console.log("err");
-            setError("Wrong username or password");
+            manageError(err);
             setLoading(false);
             return;
           }
-          console.log("Login done");
-          console.log(result);
+          setLoading(false);
         }
       );
     } catch (error) {
       setError("Wrong username or password");
+      return;
     }
-    setLoading(false);
   };
 
-  // const handleSubmitLoginGoogle = async (e) => {
-  //
-  //   setLoadingGoogle(true);
-  //   try {
-  //     await loginWithGoogle();
-  //   } catch (error) {
-  //     setError("Failed to login with Google");
-  //   }
-  //   setLoadingGoogle(false);
-  // };
+  const handleSubmitLoginGoogle = async (e) => {
+  
+    setLoadingGoogle(true);
+    try {
+      await auth.authorize({ connection: 'google-oauth2' }, 
+      (err, result) => {
+        if (err)
+        {
+          setError("Failed to connect with Google.");
+          return;
+          setLoadingGoogle(false);
+        }}); 
+    } catch (error) {
+      setError("Failed to login with Google");
+      return;
+    }
+  };
 
   const handleSubmitSignup = async (e) => {
     setLoading(true);
@@ -91,7 +102,7 @@ const Login = ({ navigation }) => {
         },
         async (err, result) => {
           if (err) {
-            setError("Failed to create an account");
+            manageError(err);
             setLoading(false);
             return err;
           }
@@ -101,7 +112,6 @@ const Login = ({ navigation }) => {
     } catch (error) {
       setError("Failed to create an account");
     }
-    setLoading(false);
   };
 
   return (
@@ -538,7 +548,7 @@ const Login = ({ navigation }) => {
                     variant="contained"
                     size="large"
                     fullWidth
-                    disabled={loading || (!email && !password)}
+                    disabled={loading || (signup && cantSignup) || (!signup && cantLogin)}
                     sx={{
                       mt: 3,
                       fontWeight: "700",
@@ -565,7 +575,7 @@ const Login = ({ navigation }) => {
                         display="flex"
                         alignitems="center"
                         justifycontent="center"
-                        // onClick={handleSubmitLoginGoogle}
+                        onClick={handleSubmitLoginGoogle}
                         sx={{
                           borderRadius: "100px",
                           width: "100%",
@@ -698,7 +708,6 @@ const Login = ({ navigation }) => {
                         color="primary"
                         variant="contained"
                         size="large"
-                        disabled={loading}
                         fullWidth
                         sx={{
                           fontWeight: "700",
@@ -707,11 +716,7 @@ const Login = ({ navigation }) => {
                           pb: "10px",
                         }}
                       >
-                        {loading ? (
-                          <CircularProgress size={25} />
-                        ) : (
-                          "Créer ma boutique"
-                        )}
+                          Créer ma boutique
                       </Button>
                     </Box>
                   ) : (
@@ -720,6 +725,7 @@ const Login = ({ navigation }) => {
                       size="large"
                       display="flex"
                       alignitems="center"
+                      onClick={handleSubmitLoginGoogle}
                       justifycontent="center"
                       sx={{
                         borderRadius: "100px",
