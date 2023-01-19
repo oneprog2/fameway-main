@@ -95,7 +95,7 @@ const Login = ({ navigation }) => {
       await auth.signup(
         {
           connection: AUTH0_REALM,
-          name: username,
+          username: username,
           email,
           password,
         },
