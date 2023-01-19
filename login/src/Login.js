@@ -34,11 +34,13 @@ const Login = ({ navigation }) => {
   const [signup, setSignup] = useState(false);
   const [forgetPassword, setForgetPassword] = useState(false);
   const [error, setError] = useState("");
+  const [mailSent, setMailSent] = useState(false);
 
   const cantLogin = !email || !password;
   const cantSignup = !email || !password || !username;
 
   const manageError = (err) => {
+    console.log(err.message)
     if (!signup)
     setError("La connexion a échoué : email ou mot de passe incorrect.")
     else
@@ -113,6 +115,29 @@ const Login = ({ navigation }) => {
       setError("Failed to create an account");
     }
   };
+
+  const handlePasswordChange = async (e) => {
+    setLoading(true);
+    try {
+      await auth.changePassword(
+        {
+          connection: AUTH0_REALM,
+          email,
+        },
+        async (err, result) => {
+          if (err) {
+            manageError(err);
+            setLoading(false);
+            return err;
+          }
+          setMailSent(true);
+          setLoading(false);
+        }
+      );
+    } catch (error) {
+      setError("Failed to create an account");
+    }
+  }
 
   return (
     <Grid
@@ -220,6 +245,7 @@ const Login = ({ navigation }) => {
                     }}
                     onClick={() => {
                       setError("");
+                      setMailSent(false);
                       setForgetPassword(false);
                     }}
                   >
@@ -278,12 +304,29 @@ const Login = ({ navigation }) => {
                     fullWidth
                   />
 
+                  {mailSent ?
+
+                  <Box display="flex" alignItems="center" style={{marginTop: 5}}>
+                  <Typography
+                    color="textSecondary"
+                    variant="h4"
+                    fontWeight="500"
+                    sx={{
+                      textAlign:'center',
+                      mt: 4
+                    }}
+                  >
+                  Le mail de réinitialisation de mot de passe a bien été envoyé !
+                  </Typography>
+                  </Box>
+                  :
                   <Button
                     color="primary"
                     variant="contained"
                     size="large"
                     fullWidth
-                    disabled={loading || (!email && !password)}
+                    disabled={loading || (forgetPassword && !email)}
+                    onClick={handlePasswordChange}
                     sx={{
                       mt: 5,
                       fontWeight: "700",
@@ -298,6 +341,7 @@ const Login = ({ navigation }) => {
                       "Envoyer un mail de réinitialisation"
                     )}
                   </Button>
+}
                 </Box>
               </Box>
             ) : (
