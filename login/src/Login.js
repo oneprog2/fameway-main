@@ -40,12 +40,11 @@ const Login = ({ navigation }) => {
   const cantSignup = !email || !password || !username;
 
   const manageError = (err) => {
-    console.log(err.message)
+    console.log(err.message);
     if (!signup)
-    setError("La connexion a échoué : email ou mot de passe incorrect.")
-    else
-    setError(err.code)
-  }
+      setError("La connexion a échoué : email ou mot de passe incorrect.");
+    else setError(err.code);
+  };
 
   const handleSubmitLogin = async (e) => {
     setLoading(true);
@@ -76,17 +75,14 @@ const Login = ({ navigation }) => {
   };
 
   const handleSubmitLoginGoogle = async (e) => {
-  
     setLoadingGoogle(true);
     try {
-      await auth.authorize({ connection: 'google-oauth2' }, 
-      (err, result) => {
-        if (err)
-        {
+      await auth.authorize({ connection: "google-oauth2" }, (err, result) => {
+        if (err) {
           setError("Failed to connect with Google.");
           return;
-          setLoadingGoogle(false);
-        }}); 
+        }
+      });
     } catch (error) {
       setError("Failed to login with Google");
       return;
@@ -99,6 +95,7 @@ const Login = ({ navigation }) => {
       await auth.signup(
         {
           connection: AUTH0_REALM,
+          name: username,
           email,
           password,
         },
@@ -137,7 +134,7 @@ const Login = ({ navigation }) => {
     } catch (error) {
       setError("Failed to create an account");
     }
-  }
+  };
 
   return (
     <Grid
@@ -304,44 +301,48 @@ const Login = ({ navigation }) => {
                     fullWidth
                   />
 
-                  {mailSent ?
-
-                  <Box display="flex" alignItems="center" style={{marginTop: 5}}>
-                  <Typography
-                    color="textSecondary"
-                    variant="h4"
-                    fontWeight="500"
-                    sx={{
-                      textAlign:'center',
-                      mt: 4
-                    }}
-                  >
-                  Le mail de réinitialisation de mot de passe a bien été envoyé !
-                  </Typography>
-                  </Box>
-                  :
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    size="large"
-                    fullWidth
-                    disabled={loading || (forgetPassword && !email)}
-                    onClick={handlePasswordChange}
-                    sx={{
-                      mt: 5,
-                      fontWeight: "700",
-                      borderRadius: "100px",
-                      pt: "10px",
-                      pb: "10px",
-                    }}
-                  >
-                    {loading ? (
-                      <CircularProgress size={25} />
-                    ) : (
-                      "Envoyer un mail de réinitialisation"
-                    )}
-                  </Button>
-}
+                  {mailSent ? (
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      style={{ marginTop: 5 }}
+                    >
+                      <Typography
+                        color="textSecondary"
+                        variant="h4"
+                        fontWeight="500"
+                        sx={{
+                          textAlign: "center",
+                          mt: 4,
+                        }}
+                      >
+                        Le mail de réinitialisation de mot de passe a bien été
+                        envoyé !
+                      </Typography>
+                    </Box>
+                  ) : (
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      size="large"
+                      fullWidth
+                      disabled={loading || (forgetPassword && !email)}
+                      onClick={handlePasswordChange}
+                      sx={{
+                        mt: 5,
+                        fontWeight: "700",
+                        borderRadius: "100px",
+                        pt: "10px",
+                        pb: "10px",
+                      }}
+                    >
+                      {loading ? (
+                        <CircularProgress size={25} />
+                      ) : (
+                        "Envoyer un mail de réinitialisation"
+                      )}
+                    </Button>
+                  )}
                 </Box>
               </Box>
             ) : (
@@ -592,7 +593,11 @@ const Login = ({ navigation }) => {
                     variant="contained"
                     size="large"
                     fullWidth
-                    disabled={loading || (signup && cantSignup) || (!signup && cantLogin)}
+                    disabled={
+                      loading ||
+                      (signup && cantSignup) ||
+                      (!signup && cantLogin)
+                    }
                     sx={{
                       mt: 3,
                       fontWeight: "700",
@@ -760,7 +765,7 @@ const Login = ({ navigation }) => {
                           pb: "10px",
                         }}
                       >
-                          Créer ma boutique
+                        Créer ma boutique
                       </Button>
                     </Box>
                   ) : (
