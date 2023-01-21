@@ -4,12 +4,7 @@ import {
   DarkTheme,
   createNavigationContainerRef,
 } from "@react-navigation/native";
-import {
-  HomeScreen,
-  PresentationScreen,
-  ArticleDetailScreen,
-  StoreScreen,
-} from "@screens";
+import { PresentationScreen, ArticleDetailScreen, StoreScreen } from "@screens";
 import { useColorScheme } from "react-native";
 import { useGetOnboardingStatus } from "@hooks";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -61,27 +56,15 @@ export const AppNavigator = () => {
         initialRouteName={"Presentation"}
       >
         {(() => {
-          // if (isFirstLaunch && !logged)
-          //   return (
-          //     <>
-          //       <Stack.Screen
-          //         name="Presentation"
-          //         component={PresentationScreen}
-          //       />
-          //       <Stack.Screen name="AuthStack" component={AuthStackNavigator} />
-          //     </>
-          //   );
-          // else if (!isFirstLaunch && !logged)
-          //   return (
-          //     <>
-          //       <Stack.Screen
-          //         name="Login"
-          //         component={HomeScreen}
-          //         options={{ headerShown: false }}
-          //       />
-          //     </>
-          //   );
-          // else
+          if (isFirstLaunch)
+            return (
+              <>
+                <Stack.Screen
+                  name="Presentation"
+                  component={PresentationScreen}
+                />
+              </>
+            );
           return (
             <Stack.Group>
               <Stack.Screen

@@ -5,10 +5,6 @@ export const STORES = gql`
     store {
       id
       name
-      user {
-        id
-        email
-      }
     }
   }
 `;

@@ -1,4 +1,4 @@
-import { Button, Text, Title, PaginationDots } from "@components";
+import { Button, Text, PaginationDots } from "@components";
 import React, { useRef, useState } from "react";
 import { View, SafeAreaView, FlatList } from "react-native";
 import { useScreenSizes } from "@hooks";
@@ -6,8 +6,9 @@ import { useTheme } from "@styles";
 
 const DATA = [
   {
-    title: "Bienvenue sur Fameway",
-    description: "La plateforme qui vous permet de gérer votre famille",
+    title: "Bienvenue sur",
+    // description: "La plateforme qui vous permet de gérer votre famille",
+    image: require("@assets/images/presentation/.png"),
   },
   {
     title: "Retrouvez vos créateurs de contenus préférés",
@@ -58,7 +59,7 @@ export const PresentationScreen = ({ navigation }) => {
                   paddingHorizontal: 20,
                 }}
               >
-                <Title position="center">{item.title}</Title>
+                <Text position="center">{item.title}</Text>
               </View>
               <View style={{ flex: 2 }}>
                 <Text>{item.description}</Text>
