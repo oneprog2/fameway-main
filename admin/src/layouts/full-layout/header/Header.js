@@ -289,9 +289,14 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar }) => {
                 borderRadius: "100%",
                 width: "30px",
                 height: "30px",
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
                 backgroundColor: "#000000",
               }}
-            />
+            >
+              <FeatherIcon icon="user" width="15" height="15" color="white" />
+            </Box>
             <Box
               sx={{
                 display: {
@@ -316,7 +321,7 @@ const Header = ({ sx, customClass, toggleSidebar, toggleMobileSidebar }) => {
                   ml: 1,
                 }}
               >
-                {user?.name}
+                {user?.username}
               </Typography>
               <FeatherIcon icon="chevron-down" width="20" height="20" />
             </Box>

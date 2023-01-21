@@ -17,7 +17,7 @@ const ProfileDropdown = () => {
 
   return (
     <Box>
-      <Box sx={{}}>
+      <Box>
         <Box display="flex" alignItems="center">
           <Box
             sx={{
@@ -26,7 +26,14 @@ const ProfileDropdown = () => {
               borderRadius: "100%",
               backgroundColor: "#000000",
             }}
-          />
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              display: "flex",
+            }}
+          >
+            <FeatherIcon icon="user" width="40" height="40" color="white" />
+          </Box>
           <Box
             sx={{
               ml: 2,
@@ -43,19 +50,6 @@ const ProfileDropdown = () => {
             <Typography color="textSecondary" variant="h6" fontWeight="400">
               Créateur
             </Typography>
-            <Box display="flex" alignItems="center">
-              <Typography
-                color="textSecondary"
-                display="flex"
-                alignItems="center"
-                sx={{
-                  color: (theme) => theme.palette.grey.A200,
-                  mr: 1,
-                }}
-              >
-                <FeatherIcon icon="mail" width="18" />
-              </Typography>
-            </Box>
           </Box>
         </Box>
       </Box>

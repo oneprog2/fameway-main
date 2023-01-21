@@ -301,6 +301,7 @@ height: 100%; }
         webAuth.redirect.signupAndLogin({
           connection: databaseConnection,
           email: email,
+          username: 
           password: password,
           captcha: captcha.getValue()
         }, function(err) {

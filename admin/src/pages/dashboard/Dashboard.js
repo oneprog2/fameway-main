@@ -36,25 +36,9 @@ const Dashboard1 = () => {
   return (
     <PageContainer title="Dashboard" description="Main informations">
       <Breadcrumb
-        title={`Hello ${user?.name}`}
+        title={`Hello ${user?.username}`}
         subtitle={`C'est le come back !`}
-      >
-        <ThemeSelect />
-        <Button
-          to="/user-profile"
-          component={NavLink}
-          sx={{
-            ml: 1,
-          }}
-          variant="contained"
-          color="primary"
-        >
-          <FeatherIcon icon="user" width="18" height="18" />
-          <Box fontWeight="400" sx={{ ml: 1 }}>
-            Profile
-          </Box>
-        </Button>
-      </Breadcrumb>
+      ></Breadcrumb>
     </PageContainer>
   );
 };
