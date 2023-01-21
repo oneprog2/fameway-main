@@ -34,7 +34,10 @@ const Dashboard1 = () => {
   }
 
   return (
-    <PageContainer title="Dashboard" description="Main informations">
+    <PageContainer
+      title="Fameway - Gestion de boutique"
+      description="Main informations"
+    >
       <Breadcrumb
         title={`Hello ${user?.username}`}
         subtitle={`C'est le come back !`}
