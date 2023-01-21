@@ -30,7 +30,7 @@ const Dashboard1 = () => {
   const { user, isLoading, logout } = useAuth0();
 
   if (isLoading) {
-    return <div>Loading ...</div>;
+    return <div>Chargement ...</div>;
   }
 
   return (

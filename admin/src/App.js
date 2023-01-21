@@ -16,15 +16,15 @@ const App = () => {
   const { isLoading, loginWithRedirect, isAuthenticated } = useAuth0();
   const [notReady, setNotReady] = useState(true);
 
-  // useEffect(() => {
-  //   if (!isAuthenticated && !isLoading) {
-  //     loginWithRedirect();
-  //   } else if (isAuthenticated && !isLoading) {
-  //     setNotReady(false);
-  //   }
-  // }, [isAuthenticated, isLoading, loginWithRedirect]);
+  useEffect(() => {
+    if (!isAuthenticated && !isLoading) {
+      loginWithRedirect();
+    } else if (isAuthenticated && !isLoading) {
+      setNotReady(false);
+    }
+  }, [isAuthenticated, isLoading, loginWithRedirect]);
 
-  // if (notReady) return <div>Loading ...</div>;
+  if (notReady) return <div>Chargement ...</div>;
 
   return (
     <ThemeProvider theme={theme}>
