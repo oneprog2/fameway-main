@@ -20,6 +20,7 @@ app.get("/", async (req, res) => {
 
 app.post("/create_user_event", async (req, res) => {
   console.log(req.body);
+  res.send(`Hello, World`);
 });
 
 app.listen(port, () => {
