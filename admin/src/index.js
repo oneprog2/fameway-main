@@ -22,9 +22,6 @@ const hasuraUri = "https://fameway.hasura.app/v1/graphql";
 const AuthorizedApolloProvider = ({ children }) => {
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
 
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // } else {
   const httpLink = createHttpLink({
     uri: hasuraUri,
   });
@@ -32,7 +29,6 @@ const AuthorizedApolloProvider = ({ children }) => {
   const authLink = setContext(async () => {
     if (isAuthenticated) {
       const token = await getAccessTokenSilently();
-      console.log(token);
       return {
         headers: {
           Authorization: `Bearer ${token}`,

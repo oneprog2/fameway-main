@@ -17,7 +17,9 @@ import { useQuery } from "@apollo/client";
 
 const Dashboard1 = () => {
   const { user } = useAuth0();
-  const { loading, error, data } = useQuery(STORES);
+  const { data, error } = useQuery(STORES);
+  console.log(error);
+  console.log(data);
 
   return (
     <PageContainer
