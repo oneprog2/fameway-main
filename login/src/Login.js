@@ -59,11 +59,24 @@ const Login = ({ navigation }) => {
           realm: AUTH0_REALM,
           state: stateParam,
         },
-        (err, result) => {
+        async (err, result) => {
           if (err) {
-            manageError(err);
-            setLoading(false);
-            return;
+            await auth.login(
+              {
+                username: email,
+                password,
+                realm: AUTH0_REALM,
+                state: stateParam,
+              },
+              (err, result) => {
+                if (err) {
+                  manageError(err);
+                  setLoading(false);
+                  return;
+                }
+                setLoading(false);
+              }
+            );
           }
           setLoading(false);
         }
@@ -95,7 +108,7 @@ const Login = ({ navigation }) => {
       await auth.signup(
         {
           connection: AUTH0_REALM,
-          name: username,
+          username: username,
           email,
           password,
         },
