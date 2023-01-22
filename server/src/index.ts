@@ -17,4 +17,10 @@ const server = app.listen(port, () => {
 app.post("/create_user_event", async (req, res) => {
   console.log(req.body);
   res.send(`Hello, World`);
+  // ici on call le service qui va créer la boutique ?
+});
+
+
+app.post("/create_user_and_shop", async (req, res) => {
+  // on peux en faire une action aussi -> Ici on call le service qui va créer la boutique et l'utilisateur
 });
